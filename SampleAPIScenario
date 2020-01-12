@@ -1,0 +1,38 @@
+GIVEN: a requestor has included query parameters of:
+1. serviceId
+2. srcClientId
+3. srcDpaId
+4. srciTransactionId
+AND a query parameter does not fit the following format requirements:
+1. serviceId - string, max length 255
+2. srcClientId - string, UUID v4
+3. srcDpaId - string, UUID v4
+4. srciTransactionId - string, UUID v4
+WHEN: the is recognized service is called at /api/v1.0/identities/recognise
+THEN: a response with HTTP code 400 should be returned with a response body (error detail for each invalid parameter) of:
+
+{
+
+  "errorDetail": [
+
+    {
+
+      "message": "Value sent does not match the expected format as defined in the specification.",
+
+      "reason": "INVALID FORMAT",
+
+      "source": "{attribute name}",
+
+      "sourceType": "{parameter type - ENUM:HEADER, QUERY, PATH, BODY}"
+
+    }
+
+  ],
+
+  "message": "Values provided in the request do not meet the specifications.",
+
+  "reason": "BAD REQUEST",
+
+  "status": 400
+
+}
